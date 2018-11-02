@@ -22,6 +22,16 @@ if((previousValues["Status"] != "Complete / Closed / Finished" ) && (currentValu
     
 }
 
+// Capture date site visit is invoiced
+if((previousValues["Invoiced?"] != "Yes") && (currentValues["Invoiced?"] == "Yes")) {
+    currentValues["AppScriptInvoiceDate"] = date;
+}
+
+// Capture date site visit is discarded (by accounting)
+if((previousValues["Invoiced?"] != "Discard") && (currentValues["Invoiced?"] == "Discard")) {
+    currentValues["AppScriptDiscardedDate"] = date;
+}
+
 // If Automate Checkbox is checked, change Invoice? to Yes
 String invoiceString = currentValues["Automate"].toString();
 if(invoiceString.contains("Yes")) {
