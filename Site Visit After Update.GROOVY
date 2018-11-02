@@ -196,6 +196,11 @@ if(previousValues["Invoiced?"] != "Yes") {
     }
 }
 
+// Capture Date Discarded
+if((previousValues["Invoiced?"] != "Discarded") && (currentValues["Invoiced?"] == "Discarded")) {
+    currentValues["AppScriptDiscardedDate"] = date; // Capture date discarded.
+}
+
 // This Logic captures when the first task is started.
 if((previousValues["Current Completed"] == 0 || previousValues["Current Completed"] == null) && currentValues["Current Completed"] != 0) {
     currentValues["Calc Job Started"] = date; //new Date();
