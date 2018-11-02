@@ -11,3 +11,4 @@ addChild "All Bitting", "Link to Combination Locks", ['Bitting Type' : "Combinat
                                                     'User Combination' : currentValues["User Combination"],
                                                     'Programming Combination' : currentValues["Programming Combination"],
                                                     'Link to Location / Facility' : currentValues["Link to Location / Facility"]];
+ 
