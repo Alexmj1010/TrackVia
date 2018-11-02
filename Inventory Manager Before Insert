@@ -1,0 +1,5 @@
+// Remove command may come with minimal input, and it implies that links are already in existence
+if(currentValues["Arguments"] == "Remove") {
+    currentValues["Link to Product Database"] = currentValues["Link to Inventory"]["Link to Product Database"];
+    currentValues["Link to Inventory - Sub Location"] = currentValues["Link to Inventory"]["Link to Inventory - Sub Location"];
+}
