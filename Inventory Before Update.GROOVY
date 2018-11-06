@@ -18,6 +18,11 @@ def getInventoryLocationIdentifier(Map product, Map inventoryLocation) {
 if((previousValues["Link to Inventory - Sub Location"] != currentValues["Link to Inventory - Sub Location"]) && currentValues["SPLIT Non-Stock Items"] != "Yes") {
     // Update Identifier
     currentValues["Identifier"] = getInventoryLocationIdentifier(currentValues["Link to Product Database"] as Map, currentValues["Link to Inventory - Sub Location"] as Map) as String;
+    List taskBuilders = getChildren("Task Builder", "Link to Inventory") as List;
+    if(taskBuilders != null) {
+        Map getSiteVisit = taskBuilders[0] as Map;
+        currentValues["Link to Inventory - Sub Location"]["Link to Site Visit"] = getSiteVisit["Link to Task List"]["Link to Site Visit"];
+    }
     /*if(currentValues["Type"] == "Non-Stock Items") {
         List taskBuilders = getChildren("Task Builder", "Link to Inventory") as List;
         logger.error("I'm here1");
