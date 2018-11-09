@@ -119,6 +119,19 @@ if(currentValues["Link to User Table"]["User Name"] == "Lucas_Test") {
 // William Gleaves
 } else if(currentValues["Link to User Table"]["User Name"] == "William Gleaves") {
     currentValues["Link to Communication Notes"]["Join_William_Gleaves"] = null;
+
+// Jordan Boatwright
+} else if(currentValues["Link to User Table"]["User Name"] == "Jordan Boatwright") {
+    currentValues["Link to Communication Notes"]["Join_Jordan_Boatwright"] = null;
+    
+// Eric Spear
+} else if(currentValues["Link to User Table"]["User Name"] == "Eric Spear") {
+    currentValues["Link to Communication Notes"]["Join_Eric_Spear"] = null;
+    
+// Scotty Hinson
+} else if(currentValues["Link to User Table"]["User Name"] == "Scotty Hinson") {
+    currentValues["Link to Communication Notes"]["Join_Scotty_Hinson"] = null;
+    
 }
 
 
