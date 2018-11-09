@@ -126,14 +126,25 @@ if(technicians.contains("Michael Childress")) {
 // William Gleaves
 if(technicians.contains("William Gleaves")) {
     Map systemUser = loadRecord("Account Users", "Email", "william@locdoc.net") as Map;
-    currentValues["Join_William Gleaves"] = systemUser;
+    currentValues["Join_William_Gleaves"] = systemUser;
 }
 
-
-
-
-
-
-
-
+// Jordan Boatwright
+if(technicians.contains("Jordan Boatwright")) {
+    Map systemUser = loadRecord("Account Users", "Email", "jordan@locdoc.net") as Map;
+    currentValues["Join_Jordan_Boatwright"] = systemUser;
+}
+    
+// Eric Spear
+if(technicians.contains("Eric Spear")) {
+    Map systemUser = loadRecord("Account Users", "Email", "eric@locdoc.net") as Map;
+    currentValues["Join_Eric_Spear"] = systemUser;
+}
+    
+// Scotty Hinson
+if(technicians.contains("Scotty Hinson")) {
+    Map systemUser = loadRecord("Account Users", "Email", "scotty@locdoc.net") as Map;
+    currentValues["Join_Scotty_Hinson"] = systemUser;
+    
+}
 
