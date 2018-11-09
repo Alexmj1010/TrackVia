@@ -148,6 +148,24 @@ if(currentValues["Link to User Table"]["User Name"] == "Lucas_Test") {
 } else if(currentValues["Link to User Table"]["User Name"] == "William Gleaves") {
     Map systemUser28 = loadRecord("Account Users", "Email", "william@locdoc.net") as Map;
     currentValues["Link to Communication Notes"]["Join_William_Gleaves"] = systemUser28
+    
+// Jordan Boatwright    
+} else if(currentValues["Link to User Table"]["User Name"] == "Jordan Boatwright") {
+    Map systemUser29 = loadRecord("Account Users", "Email", "jordan@locdoc.net") as Map;
+    currentValues["Link to Communication Notes"]["Join_Jordan_Boatwright"] = systemUser29
+    
+// Eric Spear    
+} else if(currentValues["Link to User Table"]["User Name"] == "Eric Spear") {
+    Map systemUser30 = loadRecord("Account Users", "Email", "eric@locdoc.net") as Map;
+    currentValues["Link to Communication Notes"]["Join_Eric_Spear"] = systemUser30
+    
+// Scotty Hinson   
+} else if(currentValues["Link to User Table"]["User Name"] == "Scotty Hinson") {
+    Map systemUser31 = loadRecord("Account Users", "Email", "scotty@locdoc.net") as Map;
+    currentValues["Link to Communication Notes"]["Join_Scotty_Hinson"] = systemUser31
+
+    
+    
 } 
 
 
