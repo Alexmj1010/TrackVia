@@ -4937,15 +4937,15 @@ if(currentValues["Link to Locations Openings"] && currentValues["Link to Non Mas
 }
 
 // If after updating a task the user selects to use existing master key bitting (bitting linked through location on opening)
-if(currentValues["Link to Locations Openings"] && currentValues["Link to Master Key Codes"] && !previousValues["Link to Master Key Codes"]) {
-    currentValues["Link to Locations Openings"]["Link to Master Key Codes"] = currentValues["Link to Master Key Codes"];
-    save "All Bitting", ['Link to Master Key Codes' : currentValues["Link to Master Key Codes"],
+if(currentValues["Link to Locations Openings"] && currentValues["Link to Generated System"] && !previousValues["Link to Generated System"]) {
+    currentValues["Link to Locations Openings"]["Link to Generated System"] = currentValues["Link to Generated System"];
+    save "All Bitting", ['Link to Generated System' : currentValues["Link to Generated System"],
                          'Link to Location / Facility' : currentValues["Link to Locations Openings"]["Link to Location / Facility"],
-                         'Link to Products - Keyway List' : currentValues["Link to Master Key Codes"]["Link to System IDs"]["Link to Products - Keyway List"],
+                         'Link to Products - Keyway List' : currentValues["Link to Generated System"]["Link to System IDs"]["Link to Products - Keyway List"],
                          'Bitting Type' : "Master",
-                         'Key Code' : currentValues["Link to Master Key Codes"]["Blind Code"],
-                         'SKD Cuts' : currentValues["Link to Master Key Codes"]["Bitting"],
-                         'System ID' : currentValues["Link to Master Key Codes"]["System ID"]];
+                         'Key Code' : currentValues["Link to Generated System"]["Blind Code"],
+                         'SKD Cuts' : currentValues["Link to Generated System"]["Bitting"],
+                         'System ID' : currentValues["Link to Generated System"]["System ID"]];
 }
 
 // If after updating a task the user selects to use existing combination bitting (bitting linked through location on opening)
