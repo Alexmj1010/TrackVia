@@ -1646,7 +1646,7 @@ currentValues["Original Total"] = (currentValues["Quantity"] as double) * (curre
 
 /*________________________________________________________________________________________/
 / App: Site Visits
-/ Table: Non Master Keys
+/ Table: General Bitting
 / Event: After Insert
 /_____________________________________________________________________________________*/
 
@@ -1660,7 +1660,7 @@ if(currentValues["Link to Location / Facility"]["Link to Complex"] != null) {
     currentValues["Link to Complex"] = currentValues["Link to Location / Facility"]["Link to Complex"];
 }
 
-addChild "All Bitting", "Link to Non Master Keys", ['Bitting Type' : "General",
+addChild "All Bitting", "Link to General Bitting", ['Bitting Type' : "General",
                                                     'SKD Cuts' : currentValues["SKD Cuts (Bitting)"],
                                                     'Control Key' : currentValues["Control Key"],
                                                     'Master Key' : currentValues["Master Key"],
@@ -4419,7 +4419,7 @@ if((currentValues["New/Existing Opening"] == "Existing") && (currentValues["Pare
 // If upon creation of a task the user selects to create new general bitting, run this script!
 if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "General Bitting") && (currentValues["Add Type"] == "Manual")) {
     Map newBitting = null;
-    newBitting = save "Non Master Keys",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
+    newBitting = save "General Bitting",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
                                          'Link to Location / Facility' : currentValues["Link to Site Visit"]["Link to Location / Facility"],
                                          'Link to Products - Keyway List' : currentValues["Link to Products - Keyway List"],
                                          'SKD Cuts (Bitting)' : currentValues["SKD Cuts"],
@@ -4428,7 +4428,7 @@ if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting T
                                          'SubMaster' : currentValues["SubMaster"],
                                          'Keycode' : currentValues["Key Code"],
                                          'Suite' : currentValues["Suite Number"]];
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = newBitting;
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = newBitting;
                             
 }
 
@@ -4436,7 +4436,7 @@ if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting T
 if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "General Bitting") && (currentValues["Add Type"] == "Choose Available - 5 Pin")) {
     Map newBitting = null;
     currentValues["SKD Cuts"] = currentValues["Link to Available 5 Pin Bitting"]["SKD Cuts"];
-    newBitting = save "Non Master Keys",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
+    newBitting = save "General Bitting",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
                                          'Link to Location / Facility' : currentValues["Link to Site Visit"]["Link to Location / Facility"],
                                          'Link to Products - Keyway List' : currentValues["Link to Products - Keyway List"],
                                          'SKD Cuts (Bitting)' : currentValues["SKD Cuts"],
@@ -4445,14 +4445,14 @@ if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting T
                                          'SubMaster' : currentValues["SubMaster"],
                                          'Keycode' : currentValues["Key Code"],
                                          'Suite' : currentValues["Suite Number"]];
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = newBitting;
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = newBitting;
 }
 
 // If upon creation of a task the user selects to create new general bitting using random 6 pin, run this script!
 if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "General Bitting") && (currentValues["Add Type"] == "Choose Available - 6 Pin")) {
     Map newBitting = null;
     currentValues["SKD Cuts"] = currentValues["Link to Available 6 Pin Bitting"]["SKD Cuts"];
-    newBitting = save "Non Master Keys",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
+    newBitting = save "General Bitting",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
                                          'Link to Location / Facility' : currentValues["Link to Site Visit"]["Link to Location / Facility"],
                                          'Link to Products - Keyway List' : currentValues["Link to Products - Keyway List"],
                                          'SKD Cuts (Bitting)' : currentValues["SKD Cuts"],
@@ -4461,7 +4461,7 @@ if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting T
                                          'SubMaster' : currentValues["SubMaster"],
                                          'Keycode' : currentValues["Key Code"],
                                          'Suite' : currentValues["Suite Number"]];
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = newBitting;
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = newBitting;
                             
 }
 
@@ -4475,8 +4475,8 @@ if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting T
 }
 
 // If upon creation of a task the user selects to use existing bitting (in this scope it will show all bitting because the opening is not linked to parent location)
-if(currentValues["Link to Locations Openings"] && currentValues["Link to Non Master Keys"]) {
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = currentValues["Link to Non Master Keys"];
+if(currentValues["Link to Locations Openings"] && currentValues["Link to General Bitting"]) {
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = currentValues["Link to General Bitting"];
 }
 
 // If upon creation of a task the user selects to create new general bitting, run this script!
@@ -4891,7 +4891,7 @@ if((previousValues["New/Existing Opening"] != "Existing") && (currentValues["New
 // If upon Update a task the user selects to create new general bitting, run this script!
 if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "General Bitting") && (currentValues["Add Type"] == "Manual Add")) {
     Map newBitting = null;
-    newBitting = save "Non Master Keys",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
+    newBitting = save "General Bitting",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
                                          'Link to Location / Facility' : currentValues["Link to Site Visit"]["Link to Location / Facility"],
                                          'Link to Products - Keyway List' : currentValues["Link to Products - Keyway List"],
                                          'SKD Cuts (Bitting)' : currentValues["SKD Cuts"],
@@ -4900,7 +4900,7 @@ if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Exis
                                          'SubMaster' : currentValues["SubMaster"],
                                          'Keycode' : currentValues["Key Code"],
                                          'Suite' : currentValues["Suite Number"]];
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = newBitting;
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = newBitting;
                             
 }
 
@@ -4908,7 +4908,7 @@ if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Exis
 if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "General Bitting") && (currentValues["Add Type"] == "Choose Available - 5 Pin")) {
     Map newBitting = null;
     currentValues["SKD Cuts"] = currentValues["Link to Available 5 Pin Bitting"]["SKD Cuts"];
-    newBitting = save "Non Master Keys",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
+    newBitting = save "General Bitting",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
                                          'Link to Location / Facility' : currentValues["Link to Site Visit"]["Link to Location / Facility"],
                                          'Link to Products - Keyway List' : currentValues["Link to Products - Keyway List"],
                                          'SKD Cuts (Bitting)' : currentValues["SKD Cuts"],
@@ -4917,14 +4917,14 @@ if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Exis
                                          'SubMaster' : currentValues["SubMaster"],
                                          'Keycode' : currentValues["Key Code"],
                                          'Suite' : currentValues["Suite Number"]];
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = newBitting;
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = newBitting;
 }
 
 // If upon update a task the user selects to create new general bitting using random 6 pin, run this script!
 if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "General Bitting") && (currentValues["Add Type"] == "Choose Available - 6 Pin")) {
     Map newBitting = null;
     currentValues["SKD Cuts"] = currentValues["Link to Available 6 Pin Bitting"]["SKD Cuts"];
-    newBitting = save "Non Master Keys",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
+    newBitting = save "General Bitting",['Link to Complex' : currentValues["Link to Site Visit"]["Link to Location / Facility"]["Link to Complex"],
                                          'Link to Location / Facility' : currentValues["Link to Site Visit"]["Link to Location / Facility"],
                                          'Link to Products - Keyway List' : currentValues["Link to Products - Keyway List"],
                                          'SKD Cuts (Bitting)' : currentValues["SKD Cuts"],
@@ -4933,7 +4933,7 @@ if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Exis
                                          'SubMaster' : currentValues["SubMaster"],
                                          'Keycode' : currentValues["Key Code"],
                                          'Suite' : currentValues["Suite Number"]];
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = newBitting;
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = newBitting;
 }
 
 // If upon update a task the user selects to create new combination Lock, run this script!
@@ -4962,8 +4962,8 @@ if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Exis
 }
 
 // If after updating a task the user selects to use existing general bitting (bitting linked through location on opening)
-if(currentValues["Link to Locations Openings"] && currentValues["Link to Non Master Keys"] && !previousValues["Link to Non Master Keys"]) {
-    currentValues["Link to Locations Openings"]["Link to Non Master Keys"] = currentValues["Link to Non Master Keys"];
+if(currentValues["Link to Locations Openings"] && currentValues["Link to General Bitting"] && !previousValues["Link to General Bitting"]) {
+    currentValues["Link to Locations Openings"]["Link to General Bitting"] = currentValues["Link to General Bitting"];
 }
 
 // If after updating a task the user selects to use existing master key bitting (bitting linked through location on opening)
