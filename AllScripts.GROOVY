@@ -249,6 +249,58 @@ if((currentValues["Run"] == "Yes") && (previousValues["Run"] == null)) { // So i
 
 /*________________________________________________________________________________________/
 / App: Site Visits
+/ Table: Billing Record
+/ Event: After Insert
+/_____________________________________________________________________________________*/
+
+/*________________________________________________________________________/
+/ This script converts the ID provided from QBO for a customers TERMS    /
+/ into the human readable "NET x" value - x is number of days           /
+/_____________________________________________________________________*/
+
+if(currentValues["QBO_Terms_ID"]) {
+    // If QBO Terms ID is equal to 5 - set billing terms to Net 10
+    if(currentValues["QBO_Terms_ID"] == 5) {
+        currentValues["Billing Terms"] = "Net 10"
+    }
+    if(currentValues["QBO_Terms_ID"] == 6) {
+        currentValues["Billing Terms"] = "Net 15"
+    }
+    if(currentValues["QBO_Terms_ID"] == 7) {
+        currentValues["Billing Terms"] = "Net 30"
+    }
+    if(currentValues["QBO_Terms_ID"] == 8) {
+        currentValues["Billing Terms"] = "Net 60"
+    }
+    if(currentValues["QBO_Terms_ID"] == 9) {
+        currentValues["Billing Terms"] = "Net 30"
+    }
+    if(currentValues["QBO_Terms_ID"] == 10) {
+        currentValues["Billing Terms"] = "Net 30"
+    }
+    if(currentValues["QBO_Terms_ID"] == 11) {
+        currentValues["Billing Terms"] = "Net 10"
+    }
+    if(currentValues["QBO_Terms_ID"] == 12) {
+        currentValues["Billing Terms"] = "Net 20"
+    }
+    if(currentValues["QBO_Terms_ID"] == 13) {
+        currentValues["Billing Terms"] = "Net 45"
+    }
+    if(currentValues["QBO_Terms_ID"] == 14) {
+        currentValues["Billing Terms"] = "Net 30"
+    }
+    if(currentValues["QBO_Terms_ID"] == 15) {
+        currentValues["Billing Terms"] = "Net 10"
+    }
+    if(currentValues["QBO_Terms_ID"] == 16) {
+        currentValues["Billing Terms"] = "Net 100"
+    }
+    
+}
+
+/*________________________________________________________________________________________/
+/ App: Site Visits
 / Table: Combination Locks
 / Event: After Insert
 /_____________________________________________________________________________________*/
