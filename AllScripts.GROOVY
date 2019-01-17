@@ -1632,6 +1632,26 @@ if(currentValues["Link to Locations Openings"]) {
     currentValues["Link to Locations Openings"] = null;
 }
 
+/*______________________________________________________________________________________
+|  Captures previously linked openings on the Generated System Record                  \
+|______________________________________________________________________________________*/
+
+if((previousValues["Link to Generated System"] != currentValues["Link to Generated System"]) && previousValues["Link to Generated System"] != null) {
+    if(currentValues["Barcode ID"]) {
+        String previousOpenings = "";
+        logger.error("I'm here");
+        String stringTemp = new BigDecimal(currentValues["Barcode ID"] as int).toPlainString()
+        //stringTemp = currentValues["Barcode ID"] as String;
+        if(previousValues["Link to Generated System"]["Previous Openings"]) {
+            previousOpenings = previousValues["Link to Generated System"]["Previous Openings"] as String;
+        }
+        previousOpenings += ("P" + stringTemp + " ");
+        logger.error(previousOpenings);
+        previousValues["Link to Generated System"]["Previous Openings"] = previousOpenings;
+        
+    }
+}
+
 /*________________________________________________________________________________________/
 / App: Site Visits
 / Table: Margin Calculator
