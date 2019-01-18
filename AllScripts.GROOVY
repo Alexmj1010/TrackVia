@@ -4,7 +4,7 @@
 / Event: Before Insert
 /_____________________________________________________________________________________*/
 
-Map newContact = null;;
+Map newContact = null;
 Map newPhoneNumber = currentValues["Link to Phone Numbers"] as Map;
 Map newCustomer = currentValues["Link to Customers"] as Map;
 Map newLocation = currentValues["Link to Location / Facility"] as Map;
@@ -2052,6 +2052,140 @@ if(currentValues["Follow Up Progress"]) {
     }
 }
 
+
+// When process admin is changed to yes, grab all the tasks, and change their process admin to yes
+if((currentValues["Process ADMIN"] == "YES") && (previousValues["Process ADMIN"] != "YES")) {
+    // Grab child task list records and put them in list
+    List childRecords = getChildren("Task List","Link to Quote Builder") as List;
+    childRecords.each { // Iterate that list!
+        it["Process ADMIN"] = "YES"; // Update Process admin to yes on all child records
+    }
+}
+// Same as above, but undo...
+if((currentValues["Process ADMIN"] == null) && (previousValues["Process ADMIN"] != null)) {
+    List childRecords = getChildren("Task List","Link to Quote Builder") as List;
+    childRecords.each {
+        it["Process ADMIN"] = null;
+    }
+}
+
+
+
+
+if((previousValues["Reconcile ADMIN"] != "YES" ) && (currentValues["Reconcile ADMIN"] == "YES")) {
+    String scTax = "TAX";
+    String cusTax = "TAX";
+    double taxAmount = ((currentValues["Link to Service Call"]["Cost"] as double) * (currentValues["Link to Location / Facility"]["Link to Tax Rates"]["EstimatedCombinedRate"] as double)).round(7);
+    if(currentValues["Link to Location / Facility"]["State"] == "SC") {
+            scTax = "NON";
+            taxAmount = 0;
+    }
+    // Check if Customer Is taxable for the trip charge
+    if(currentValues["Link to Customers"]["Taxable?"] == "NON") {
+        cusTax = "NON";
+        scTax = "NON";
+        taxAmount = 0;
+    }
+    //if(currentValues["Link to Service Call"]["Service Name"] != "No Charge") 
+    if(currentValues["Link to Service Call"] != null) {
+        addChild "Line Items Join Table","Link to Quote Builder",['Type' : "Service",
+                                      'Identifier' : currentValues["Link to Service Call"]["Service Name"],
+                                      'Description' : currentValues["Link to Service Call"]["Service Name"],
+                                      'Quantity' : 1,
+                                      'Taxable' : scTax,
+                                      'QBO_ID' : currentValues["Link to Service Call"]["QBO_Ref_ID"],
+                                      'Our Cost' : 0,
+                                      'Task Name' : "Trip Charge",
+                                      //'Margin' : currentValues["Link to Service Call"]["Cost"],
+                                      //'Link to Task Builder' : _this,
+                                      'Tax' : taxAmount,
+                                      'Total Cost' : currentValues["Link to Service Call"]["Cost"],
+                                      'Our Total Cost' : 0,
+                                      'Profit Margin' : currentValues["Link to Service Call"]["Cost"],
+                                      'Total With Tax' : (taxAmount + (currentValues["Link to Service Call"]["Cost"] as double)).round(2),
+                                      'Cost' : currentValues["Link to Service Call"]["Cost"]];
+    }
+    List lineItems = getChildren("Line Items Join Table","Link to Quote Builder") as List;
+    lineItems.each {
+        if(it["Type"] == "Discard") {
+            it["Total Cost"] = 0;
+            it["Our Total Cost"] = 0;
+            it["Profit Margin"] = 0;
+            it["Tax"] = 0;
+            it["Total With Tax"] = 0;
+        }
+        //logger.error(it["Link to Task List"].toString());
+        if((it["Link to Task List"] == null) && (it["Task Name"] != "Trip Charge")) {
+            it["Type"] = "Discard";
+            it["Total Cost"] = 0;
+            it["Our Total Cost"] = 0;
+            it["Profit Margin"] = 0;
+            it["Tax"] = 0;
+            it["Total With Tax"] = 0;
+        } // Possibly Combine these??
+        if((it["Link to Task Builder"] == null) && (it["Task Name"] != "Trip Charge")) { 
+            it["Type"] = "Discard";
+            it["Total Cost"] = 0;
+            it["Our Total Cost"] = 0;
+            it["Profit Margin"] = 0;
+            it["Tax"] = 0;
+            it["Total With Tax"] = 0;
+            //Map toDelete = it as Map;
+            //delete toDelete;
+        }
+        if((it["Link to Task Builder"] != null) && (it["Link to Task List"] != null) && (it["Type"] != "Discard")) {
+            if(it["QBO_ID"] == "99999") {
+                it["QBO_ID"] = it["Link to Task Builder"]["Link to Product Database"]["QBO_Ref_ID"];
+            }
+            if((scTax == "NON") && (it["Type"] == "Service")) {
+                it["Taxable"] = "NON";
+            }
+            if((currentValues["Pricing Year"] != "Use Latest") && (it["Type"] == "Product") && (it["Special Pricing"] != "Yes")) {
+                //logger.error("I'm here!");
+                if(currentValues["Pricing Year"] == "Mid 2018") {
+                    it["Cost"] = it["Link to Task Builder"]["Link to Product Database"]["Mid 2018 MSRP"];
+                }
+                if(currentValues["Pricing Year"] == "2018") {
+                    it["Cost"] = it["Link to Task Builder"]["Link to Product Database"]["2018 MSRP"];
+                }
+                if(currentValues["Pricing Year"] == "2017") {
+                    it["Cost"] = it["Link to Task Builder"]["Link to Product Database"]["2017 MSRP"];
+                    //logger.error("I'm here!");
+                }
+            }
+            if((currentValues["Pricing Year"] != "Use Latest") && (it["Type"] == "Service") && (it["Special Pricing"] != "Yes")) {
+                //logger.error("I'm here!");
+                if(currentValues["Pricing Year"] == "Mid 2018") {
+                    it["Cost"] = it["Link to Task Builder"]["Link to Services"]["Mid 2018 MSRP"];
+                }
+                if(currentValues["Pricing Year"] == "2018") {
+                    it["Cost"] = it["Link to Task Builder"]["Link to Services"]["2018 MSRP"];
+                }
+                if(currentValues["Pricing Year"] == "2017") {
+                    it["Cost"] = it["Link to Task Builder"]["Link to Services"]["2017 MSRP"];
+                    //logger.error("I'm here!");
+                }
+            }
+            if((it["Link to Task Builder"]["Link to Product Database"]["Exclude From Tax Calculation"] == 1) && (it["Type"] == "Product")) {
+                it["Taxable"] = "NON"; // BUG If service is attached to same task builder as the product, then issue!
+            }
+            if(currentValues["Link to Customers"]["Taxable?"] == "NON") {
+                it["Taxable"] = "NON";
+            }
+            if(it["Taxable"] == "TAX") {
+                it["Tax"] = (((it["Cost"] as double) * (it["Quantity"] as double)).round(2) * (currentValues["Link to Location / Facility"]["Link to Tax Rates"]["EstimatedCombinedRate"] as double)).round(7);
+            }
+            it["Total Cost"] = ((it["Quantity"] as double) * (it["Cost"] as double)).round(2);
+            it["Our Total Cost"] = (it["Quantity"] as double) * (it["Our Cost"] as double);
+            it["Profit Margin"] = (it["Total Cost"] as double) - (it["Our Total Cost"] as double);
+            it["Total With Tax"] = ((it["Total Cost"] as double) + (it["Tax"] as double)).round(2);
+        }
+    }
+
+    
+}
+
+
 /*________________________________________________________________________________________/
 / App: Site Visits
 / Table: Quote Builder
@@ -2150,6 +2284,20 @@ if((currentValues["Run"] == "Yes") && (previousValues["Run"] == null)) {
     }
     // Set "Run" to null to avoid re-runs
     currentValues["Run"] = null;
+}
+
+/*________________________________________________________________________________________/
+/ App: Site Visits
+/ Table: Quote Builder
+/ Event: After Update
+/_____________________________________________________________________________________*/
+
+if((previousValues["Delete ADMIN"] == null) && (currentValues["Delete ADMIN"] == "YES")) {
+    //logger.error("Im here");
+    List lineItems = getChildren("Line Items Join Table", "Link to Quote Builder") as List;
+    lineItems.each { delete(it as Map); 
+                     //logger.error("I'm here 1");
+    }
 }
 
 /*________________________________________________________________________________________/
