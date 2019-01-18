@@ -2529,7 +2529,7 @@ if(((currentValues["AppScript Number PO Ordered"] as int) > 0) && ((previousValu
 String tag_String = currentValues["Tag"].toString();
 String prev_tag_String = previousValues["Tag"].toString();
 // Also holds value AppScript_PartsArrived to ensure it does not update contanstly.
-if((currentValues["AppScript_PartsArrived"] != 1) && (tag_String.contains("Parts Arrived"))) {
+if((currentValues["AppScript_PartsArrived"] != 1) && ((tag_String.contains("Parts Arrived") || (tag_String.contains("Parts at Office"))))) {
     Date today = new Date();
     Date updatedDates = new Date();
     Calendar myCal = Calendar.getInstance();
