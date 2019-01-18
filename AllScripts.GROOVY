@@ -4856,6 +4856,16 @@ if(currentValues["Link to Quote Builder"] && currentValues["Link to Site Visit"]
     childRecords.each {it["Grand Parent Type"] = 0}
     
 }
+// Capture time task goes into waiting
+if((previousValues["Progress"] != "Waiting") && (currentValues["Progress"] == "Waiting")) {
+    currentValues["AppScriptWaitingDate"] = date;
+}
+
+// Capture time task gets started
+if((previousValues["Progress"] != "In Progress") && (currentValues["Progress"] == "In Progress")) {
+    currentValues["AppScriptStartDate"] = date;
+}
+
 // Calculates Parent complete status and then updates task builders that grandparent is complete
 if((previousValues["Progress"] != "Completed") && (currentValues["Progress"] == "Completed")) {
     currentValues["Task User"] = currentValues["Last User"];
