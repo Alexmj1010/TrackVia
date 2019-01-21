@@ -4710,6 +4710,7 @@ if(currentValues["Link to Locations Openings"] && currentValues["Link to General
     currentValues["Link to Locations Openings"]["Link to General Bitting"] = currentValues["Link to General Bitting"];
 }
 
+/* DEPRECATED REMOVED RESTRICTED KEYS TABLE
 // If upon creation of a task the user selects to create new general bitting, run this script!
 if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "Restricted Key")) {
     Map newRestricted = null;
@@ -4724,7 +4725,7 @@ if((currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting T
                                          'Angles' : currentValues["Angles"]];
     currentValues["Link to Locations Openings"]["Link to Restricted Keys"] = newRestricted;
                             
-}
+}*/
 
 // If upon creation of a task quick add products and services have been chosen - add them!
 /*if((currentValues["Quick Add Products / Services"] == "Yes") && (currentValues["Testing"] != "Yes")) {
@@ -4761,10 +4762,6 @@ if((currentValues["Quick Add Products / Services"] == "Yes")/* && (currentValues
     currentValues["Quick Add Products / Services"] = "No";
     //currentValues["Testing"] = null;
 }
-
-
-
-// If upon creation of a task the user selects to create new Restricted Key, run this script!
 
 /*________________________________________________________________________________________/
 / App: Site Visits
@@ -5186,6 +5183,7 @@ if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Exis
     currentValues["Link to Locations Openings"]["Link to Combination Locks"] = newCombo;
 }
 
+/* DEPRECATED - REMOVED THE RESTRICTED KEYS TABLE
 // If upon creation of a task the user selects to create new general bitting, run this script!
 if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Existing Bitting"] == "New") && (currentValues["Bitting Type"] == "Restricted Key")) {
     Map newRestricted = null;
@@ -5200,7 +5198,7 @@ if((previousValues["New/Existing Bitting"] != "New") && (currentValues["New/Exis
                                          'Angles' : currentValues["Angles"]];
     currentValues["Link to Locations Openings"]["Link to Restricted Keys"] = newRestricted;
                             
-}
+}*/
 
 // If after updating a task the user selects to use existing general bitting (bitting linked through location on opening)
 if(currentValues["Link to Locations Openings"] && currentValues["Link to General Bitting"] && !previousValues["Link to General Bitting"]) {
@@ -5224,10 +5222,11 @@ if(currentValues["Link to Locations Openings"] && currentValues["Link to Combina
     currentValues["Link to Locations Openings"]["Link to Combination Locks"] = currentValues["Link to Combination Locks"];
 }
 
+/* DEPRECATED - REMOVED RESTRICTED KEYS TABLE
 // If after updating a task the user selects to use existing Restricted bitting (bitting linked through location on opening)
 if(currentValues["Link to Locations Openings"] && currentValues["Link to Restricted Keys"] && !previousValues["Link to Restricted Keys"]) {
     currentValues["Link to Locations Openings"]["Link to Restricted Keys"] = currentValues["Link to Restricted Keys"];
-}
+}*/
 
 // If updating a task quick add products and services have been chosen - add them!
 /*if((previousValues["Quick Add Products / Services"] != "Yes") && (currentValues["Quick Add Products / Services"] == "Yes") && (currentValues["Testing"] != "Yes")) {
