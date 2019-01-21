@@ -1726,10 +1726,20 @@ currentValues["Original Total"] = (currentValues["Quantity"] as double) * (curre
 |  This app script links new bitting to a facilities complex, if it exists            \
 |______________________________________________________________________________________*/
 
+/*______________________________________________________________________________________
+|  This app script links new bitting to a facilities complex, if it exists            \
+|______________________________________________________________________________________*/
+
 // Check if parent facility has a complex
 if(currentValues["Link to Location / Facility"]["Link to Complex"] != null) {
     // If it does have a complex, link the bitting to the complex
     currentValues["Link to Complex"] = currentValues["Link to Location / Facility"]["Link to Complex"];
+}
+
+if(currentValues["Link to Products - Keyway List"]) {
+    if(currentValues["Link to Products - Keyway List"]["Restricted Keyway"] == "YES") {
+        currentValues["Restricted"] = "YES";
+    }
 }
 
 addChild "All Bitting", "Link to General Bitting", ['Bitting Type' : "General",
@@ -1747,6 +1757,7 @@ addChild "All Bitting", "Link to General Bitting", ['Bitting Type' : "General",
                                                     'Link to Products - Keyway List' : currentValues["Link to Products - Keyway List"],
                                                     'Link to Location / Facility' : currentValues["Link to Location / Facility"]];
                                                     
+                                                                                                 
 /*________________________________________________________________________________________/
 / App: Site Visits
 / Table: Parts Request
