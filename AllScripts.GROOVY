@@ -5038,7 +5038,7 @@ if((previousValues["Progress"] != "In Progress") && (currentValues["Progress"] =
 
 // Calculates Parent complete status and then updates task builders that grandparent is complete
 if((previousValues["Progress"] != "Completed") && (currentValues["Progress"] == "Completed")) {
-    currentValues["Task User"] = currentValues["Last User"];
+    //currentValues["Task User"] = currentValues["Last User"];
     currentValues["AppScriptCompleteDate"] = date;
     List sellTaskBuilders = getChildren("Task Builder", "Link to Task List") as List;
     sellTaskBuilders.each {
