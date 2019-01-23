@@ -1940,6 +1940,20 @@ currentValues["AppScript Item Number"] = appScriptItemNumber;
 
 /*________________________________________________________________________________________/
 / App: Site Visits
+/ Table: Product Database
+/ Event: Before Update
+/_____________________________________________________________________________________*/
+
+if(previousValues["QBO_Ref_ID"] != currentValues["QBO_Ref_ID"]) {
+    String identifier = currentValues["AppScript Item Number"] as String;
+    List lineItemsRecords = find "Line Items Join Table", "Identifier", identifier;
+    lineItemsRecords.each {
+        it["QBO_ID"] = currentValues["QBO_Ref_ID"];
+    }
+}
+
+/*________________________________________________________________________________________/
+/ App: Site Visits
 / Table: Purchase Order
 / Event: After Update
 /_____________________________________________________________________________________*/
