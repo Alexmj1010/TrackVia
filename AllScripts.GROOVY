@@ -845,14 +845,14 @@ currentValues["Master Location Name"] = currentValues["Link to Inventory - Maste
 / Event: Before Update
 /_____________________________________________________________________________________*/
 
-if((currentValues["BIN Ready?"] == "Yes") && (currentValues["Link to Inventory - Sub Location"] != null)) {
-    List childRecords = getChildren("Inventory", "Link to Inventory - Sub Location") as List;
+if(currentValues["BIN Ready?"] == "Yes") {
+    List childRecords = getChildren("Task Builder", "Link to Held Location") as List;
     childRecords.each {
-        it["Link to Inventory - Sub Location"] = currentValues["Link to Inventory - Sub Location"];
+        it["Picked Up"] = 1;
+        it["Link to Held Location"] = null;
     }
-    currentValues["Link to Inventory - Sub Location"] = null;
     currentValues["BIN Ready?"] = "No";
-    currentValues["Link to Site Visit"] = null;
+    currentValues["Pick Up User"] = null;
 }
 
 /*________________________________________________________________________________________/
@@ -4435,6 +4435,22 @@ if((previousValues["PO Status"] != "Closed") && (currentValues["PO Status"] == "
                                                              'Arguments' : "Arrived",
                                                              'UniqID' : currentValues["Link to Inventory"]["UniqID"]];
     }
+}
+
+/*_________________________________________________________/
+| Parts pickup Module                                      |
+|_________________________________________________________*/
+
+if((previousValues["Link to Held Location"] == null) && (currentValues["Link to Held Location"] != null)) {
+    int currentHeld = currentValues["Link to Inventory"]["Location_Quantity_Held"] as int;
+    int newHeld = currentHeld + (currentValues["Quantity (Product)"] as int);
+    currentValues["Link to Inventory"]["Location_Quantity_Held"] = newHeld;
+}
+
+if((previousValues["Link to Held Location"] != null) && (currentValues["Link to Held Location"] == null)) {
+    int currentHeld = currentValues["Link to Inventory"]["Location_Quantity_Held"] as int;
+    int newHeld = currentHeld - (currentValues["Quantity (Product)"] as int);
+    currentValues["Link to Inventory"]["Location_Quantity_Held"] = newHeld;
 }
 
 /*________________________________________________________________________________________/
