@@ -2005,6 +2005,21 @@ currentValues["Number of Used Labels"] = 0;
 
 /*________________________________________________________________________________________/
 / App: Site Visits
+/ Table: Purchase Order
+/ Event: Before Update
+/_____________________________________________________________________________________*/
+
+if((previousValues["Link to Held Location"] == null) && (currentValues["Link to Held Location"] != null)) {
+    List childTaskBuilders = getChildren("Task Builder", "Link to Purchase Order") as List;
+    Map heldLoc = currentValues["Link to Held Location"] as Map;
+    childTaskBuilders.each {
+        it["Link to Held Location"] = heldLoc;
+    }
+    currentValues["Link to Held Location"] = null;
+}
+
+/*________________________________________________________________________________________/
+/ App: Site Visits
 / Table: Quote Builder
 / Event: After Update
 /_____________________________________________________________________________________*/
