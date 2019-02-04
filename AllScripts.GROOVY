@@ -2724,7 +2724,7 @@ if((currentValues["AppScript_PartsArrived"] != 1) && ((tag_String.contains("Part
     myCal.setTime(today);
     myCal.next();
     updatedDates = myCal.getTime();
-    currentValues["Date"] = updatedDates;
+    currentValues["New Date"] = updatedDates;
 
 
     currentValues["Status"] = "Waiting to Schedule";
