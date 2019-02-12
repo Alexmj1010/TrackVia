@@ -3660,6 +3660,7 @@ if(prodCode == 1) {
         addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
                                      'Link to Product Database' : currentValues["Link to Product Database"],
                                      'Quantity' : currentValues["Quantity (Product)"],
+                                     //'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                      'Arguments' : "Reserve"];
     }
     // If this is the second time the script is running
@@ -3722,6 +3723,7 @@ if(prodCode == 2) {
         addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : previousValues["Link to Inventory - Sub Location"],
                                      'Link to Product Database' : previousValues["Link to Product Database"],
                                      'Quantity' : previousValues["Quantity (Product)"],
+                                     'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                      'Arguments' : "Cancel"];
         
         // If this is a Non Stock Item, Automate an RGA! (But only if the PO is Ordered or Closed!)
@@ -3829,6 +3831,7 @@ if((previousValues["Parent Task Cancelled"] != 1) && (currentValues["Parent Task
         addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
                                      'Link to Product Database' : currentValues["Link to Product Database"],
                                      'Quantity' : currentValues["Quantity (Product)"],
+                                     'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                      'Arguments' : "Cancel"];
     }
 }
@@ -3850,6 +3853,7 @@ if((previousValues["Parent Task Cancelled"] == 1) && (currentValues["Parent Task
         addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
                                      'Link to Product Database' : currentValues["Link to Product Database"],
                                      'Quantity' : currentValues["Quantity (Product)"],
+                                     'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                      'Arguments' : "Reserve"];
     }
 }
@@ -3942,6 +3946,8 @@ if(getPricingYear() == "Mid 2018") {
 }
 if(getPricingYear() == "Use Latest") {
     tempServCost = (currentValues["Link to Services"]["AppScript Amount"]) as double;
+    logger.error("I'm here 001")
+    logger.error(tempServCost.toString());
 }
 if((currentValues["No Charge"] == "For Service") || (currentValues["No Charge"] == "Both")) {
         tempServCost = 0;
@@ -4006,18 +4012,24 @@ if((currentValues["Already Ran"] == 1)  && (currentValues["Link to Task List"]["
 
 // Cancel all inventory on this task builder
 if((currentValues["Inventory Command"] == "Cancel") && (previousValues["Inventory Command"] != "Cancel")) {
-    addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
+    if(currentValues["Link to Inventory"]) {
+        addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
                                                          'Link to Product Database' : currentValues["Link to Product Database"],
                                                          'Quantity' : previousValues["Quantity (Product)"],
+                                                         'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                                          'Arguments' : "Cancel"];
+    }
 }
 
 // Sell all inventory on this task builer
 if((currentValues["Inventory Command"] == "Sell") && (previousValues["Inventory Command"] != "Sell")) {
-    addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
+    if(currentValues["Link to Inventory"]) {
+        addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
                                                          'Link to Product Database' : currentValues["Link to Product Database"],
                                                          'Quantity' : previousValues["Quantity (Product)"],
+                                                         'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                                          'Arguments' : "Sell"];
+    }
 }
 
 // Reserve all inventory on this task builder
@@ -4025,6 +4037,7 @@ if((currentValues["Inventory Command"] == "Reserve") && (previousValues["Invento
     addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
                                                          'Link to Product Database' : currentValues["Link to Product Database"],
                                                          'Quantity' : previousValues["Quantity (Product)"],
+                                                         'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                                          'Arguments' : "Reserve"];
 }
 
@@ -4033,6 +4046,7 @@ if((currentValues["Inventory Command"] == "Unsell") && (previousValues["Inventor
     addChild "Inventory Manager","Link to Task Builder",['Link to Inventory - Sub Location' : currentValues["Link to Inventory - Sub Location"],
                                                          'Link to Product Database' : currentValues["Link to Product Database"],
                                                          'Quantity' : previousValues["Quantity (Product)"],
+                                                         'UniqID' : currentValues["Link to Inventory"]["UniqID"],
                                                          'Arguments' : "Add"];
 }
 
@@ -4183,8 +4197,8 @@ if(currentValues["Link to Task List"]) {
 // Returns true if Product exists at inventory location
 // Accepts String identifier - AppScript Item Number_Master Location Name_-_Sub Location Name
 def productExistsAtInventoryLocation(String identifier) {
-    Map findRecord = loadRecord "Inventory",['Identifier' : identifier] as Map;
-    return findRecord;
+    Map findRecord = loadRecord "Inventory",['Identifier' : identifier];
+    return findRecord[0];
 }
 
 // Accepts two inputs, Map of Product and Sub Location
@@ -4361,6 +4375,7 @@ if((previousValues["Grand Parent Type"] == 2) && (currentValues["Grand Parent Ty
     Map systemUser = loadRecord("Account Users", "Email", "sam@locdoc.net") as Map;
     // If Part exists in warehouse, invRecord will exist, other wise invRecord = null
     Map invRecord = loadRecord "Inventory",['Link to Product Database' : currentValues["Link to Product Database"],
+                                            'Type' : "Stock Item",
                                             'Location User' : systemUser];
      
     // If inventory record is found in warehouse, select it on task builder from quote and reserve those parts!!!                                       
@@ -4451,6 +4466,7 @@ if((previousValues["PO Status"] != "Closed") && (currentValues["PO Status"] == "
                                                              'UniqID' : currentValues["Link to Inventory"]["UniqID"]];
     }
 }
+
 
 /*_________________________________________________________/
 | Parts pickup Module                                      |
