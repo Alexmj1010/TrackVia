@@ -2699,9 +2699,17 @@ if((previousValues["Status"] != "Cancelled") && (currentValues["Status"] == "Can
 
 
 // ToZapier QBO code, change invoiced? to yes
-if(currentValues["BeginAutomation"] == "yes") {
+if((currentValues["BeginAutomation"] == "yes") && (currentValues["Deposit_Already_Invoiced_Flag"] == null)) {
     currentValues["Invoiced?"] = "Yes";
 }
+
+
+if((currentValues["BeginAutomation"] == "yes") && (currentValues["Deposit_Already_Invoiced_Flag"] != null)) {
+    //currentValues["Invoiced?"] = "Yes";
+    currentValues["Deposit_Already_Invoiced_Flag"] = null;
+}
+
+
 // Same as above but for sales receipt
 String salesReceiptString = currentValues["Automate Sales Receipt"].toString();
 if(salesReceiptString.contains("yes")) {
