@@ -333,11 +333,14 @@ addChild "All Bitting", "Link to Combination Locks", ['Bitting Type' : "Combinat
 // Interaction Note - Changes status to Waiting to Schedule
 if(currentValues["Link to Note Types"]["Note Type"] == "Need Help - to Waiting to Schedule") {
     currentValues["Link to Site Visit"]["Status"] = "Waiting to Schedule";
+    currentValues["Link to Site Visit"]["Tech Status"] = "Offsite"
+
 }
 
 // Interaction Note - Changes status to Cancelled
 if(currentValues["Link to Note Types"]["Note Type"] == "Cancel Site Visit") {
     currentValues["Link to Site Visit"]["Status"] = "Cancelled";
+    currentValues["Link to Site Visit"]["Tech Status"] = "Offsite"
 }
 
 // Interaction Note - Changes status to Completed
@@ -345,6 +348,7 @@ if(currentValues["Link to Note Types"]["Note Type"] == "Assessment Complete - Qu
     currentValues["Link to Site Visit"]["Status"] = "Completed";
     Map noCharge = loadRecord "Service Call", ['Service Name' : "No Charge"] as Map;
     currentValues["Link to Site Visit"]["Link to Service Call"] = noCharge;
+    currentValues["Link to Site Visit"]["Tech Status"] = "Offsite";
 }
 
 /*____________________________________________________________/
